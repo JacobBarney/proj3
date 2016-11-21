@@ -21,8 +21,8 @@ int main()
         delete [] dataSet[i][j];
     }
     delete [] dataSet;
-
-   
+    //Extra bullshit to do stuff
+} 
 
 
 
