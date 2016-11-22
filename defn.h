@@ -15,9 +15,14 @@ int ROWS = 63;
 int COLS = 63;
 double thresh = 0.95;
 
-struct point{
-    point() : row(-1), col(-1) {}
+struct destPoint{
+    destPoint() : row(-1), col(-1) {}
     int row;
     int col;
+};
+
+struct graphPoint{
+    graphPoint() : time(-1) {}
+    struct destPoint *dest;
     int time;
 };
