@@ -7,11 +7,16 @@ using namespace std;
 #include <math.h>
 #include <sstream>
 
-#define START_YEAR 1990
-#define END_YEAR 2005
+int START_YEAR = 1990;
+int END_YEAR = 2005;
+int YEARS = END_YEAR - START_YEAR + 1;
+int WEEKS = 52;
+int ROWS = 63;
+int COLS = 63;
+double thresh = 0.95;
 
-#define YEARS END_YEAR - START_YEAR + 1
-#define WEEKS 52
-#define ROWS 63
-#define COLS 63
-
+struct point{
+    point() : row(-1), col(-1) {}
+    int row;
+    int col;
+};
