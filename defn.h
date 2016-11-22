@@ -19,4 +19,5 @@ struct point{
     point() : row(-1), col(-1) {}
     int row;
     int col;
+    int time;
 };
