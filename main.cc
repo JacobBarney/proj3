@@ -130,6 +130,8 @@ int main()
             } 
         }
     }
+    
+    int count[ROWS*COLS] = [0];
 
     for (int i = 0; i < ROWS; i++)
     {
@@ -147,6 +149,13 @@ int main()
         }
     }
 
+    for(int i = 0; i < ROWS*COLS; i++)
+    {
+        if(count[i] > 0)
+        {
+            printf("%d graphs of size %d", count[i], i);
+        }
+    }
 
     for (int i = 0; i < ROWS; i++)
     {
