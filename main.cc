@@ -1,5 +1,21 @@
 #include "defn.h"
 
+
+int connectedComponent(struct graphPoint *point, struct graphPoint **graph, int count)
+{
+    if(point->time == -1)
+    {
+        point->time = count;
+        for(int k = 0; point->dest[k].row != -1; k++)
+        {
+            count++;
+            count = connectedComponent(&(graph[point->dest[k].row][point->dest[k].col]), graph, count);
+        }
+    }
+    return count;
+}
+
+
 int main()
 {
     float ***dataSet;
@@ -27,14 +43,14 @@ int main()
         }
     }
 
-    struct point ***graph;
-    graph = new point**[ROWS];
+    struct graphPoint **graph;
+    graph = new graphPoint*[ROWS];
     for (int i = 0; i < ROWS; i++)
     {
-        graph[i] = new struct point*[COLS];
+        graph[i] = new struct graphPoint[COLS];
         for(int h = 0; h < COLS; h++)
         {
-            graph[i][h] = new struct point[ROWS*COLS];
+            graph[i][h].dest = new struct destPoint[ROWS*COLS];
         }
     }
 
@@ -92,21 +108,21 @@ int main()
                             }
                             if(Sxy / sqrt(Sxx*Syy) > thresh)
                             {
-                                printf("Edge found! %d %d and %d %d\n", i, j, p, q);
+                                //printf("Edge found! %d %d and %d %d time of first\n", i, j, p, q);
                                 int e = 0;
-                                while(graph[i][j][e].row != -1)
+                                while(graph[i][j].dest[e].row != -1)
                                 {
                                     e++;
                                 }
-                                graph[i][j][e].row = p;
-                                graph[i][j][e].col = q;
+                                graph[i][j].dest[e].row = p;
+                                graph[i][j].dest[e].col = q;
                                 e = 0;
-                                while(graph[i][j][e].row != -1)
+                                while(graph[i][j].dest[e].row != -1)
                                 {
                                     e++;
                                 }
-                                graph[p][q][e].row = i;
-                                graph[p][q][e].col = j;
+                                graph[p][q].dest[e].row = i;
+                                graph[p][q].dest[e].col = j;
                             }
                         }
                     }
@@ -115,13 +131,25 @@ int main()
         }
     }
 
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            int connected = connectedComponent(&(graph[i][j]), graph, 0);
+            if (connected > 0)
+            {
+                printf("Graph of size %d\n", connected+1);
+                //printf("connected %d for %d, %d: ", temp, i, j);
+                //for(int k = 0; graph[i][j].dest[k].row != -1; k++)
+                //    printf("point %d, %d,  ", graph[i][j].dest[k].row, graph[i][j].dest[k].col);
+                //printf("\n");
+            }
+        }
+    }
+
 
     for (int i = 0; i < ROWS; i++)
     {
-        for(int h = 0; h < COLS; h++)
-        {
-            delete [] graph[i][h];
-        }
         delete [] graph[i];
     }
     delete [] graph;
