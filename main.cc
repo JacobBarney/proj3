@@ -15,6 +15,38 @@ int connectedComponent(struct graphPoint *point, struct graphPoint **graph, int 
     return count;
 }
 
+int clusterCoefficient(struct graphPoint *point, struct graphPoint **graph)
+{  
+    int edge = 0;
+    int count = 0;
+    float coeff;
+    
+    for(int i = 0; point->dest[i].row != -1; i++)
+    {
+        for(int j = 0; point->dest[j].row != -1; j++)
+        {
+            bool add = false;
+            for(int k = i; point->dest[i]->dest[k] != null; k++)
+            {
+                if(point->dest[i]->dest[j].row == point->dest[k].row && point->dest[i]=>dest[j].col == point->dest[k].col)
+                {
+                    add = true;
+                }
+                if(add)
+                {
+                    edge += 1;
+                }
+            }
+        }
+        count++;
+    }
+    
+    coeff = (edge * 2) / (count * (count - 1));
+    return coeff;
+
+}
+
+
 
 int main()
 {
